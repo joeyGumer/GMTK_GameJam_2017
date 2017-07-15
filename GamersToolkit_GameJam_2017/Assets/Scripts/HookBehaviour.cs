@@ -97,8 +97,11 @@ public class HookBehaviour : MonoBehaviour {
     {
         transform.position = attach_position;
 
-        if(joint.distance > 0.0f)
-            joint.distance -= player_speed * Time.deltaTime;
+        if (joint.distance > 0.0f)
+        {
+            float dist = player_speed * Time.deltaTime;
+            joint.distance -= dist;
+        }
         
         if(Input.GetKeyDown(KeyCode.G))
         {
