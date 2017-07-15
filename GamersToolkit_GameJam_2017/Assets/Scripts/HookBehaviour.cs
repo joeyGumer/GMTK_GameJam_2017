@@ -6,12 +6,16 @@ public class HookBehaviour : MonoBehaviour {
 
     public Vector3 target;
     public float max_distance = 10;
-    public float speed;
+    public float hook_speed = 50;
+    public float player_speed = 50;
+
    // public bool to_destroy = false;
 
-    private Vector3 direction;
-    private Vector3 player_position;
-    private float distance;
+    Vector3 direction;
+    Vector3 player_position;
+    Vector3 attach_position;
+    float distance;
+    DistanceJoint2D joint;
 
     //[---read only----!]
     public bool grabed;
@@ -25,6 +29,7 @@ public class HookBehaviour : MonoBehaviour {
 
         grabed = false;
         player_position = transform.position;
+        joint = GetComponent<DistanceJoint2D>();
         direction = (target - transform.position).normalized;
         hookState = Throw;
 
@@ -48,7 +53,7 @@ public class HookBehaviour : MonoBehaviour {
 
     void Move()
     {
-        Vector3 mov = direction * speed * Time.deltaTime;
+        Vector3 mov = direction * hook_speed * Time.deltaTime;
         transform.Translate(mov.x, mov.y, 0);
 
         distance = (transform.position - player_position).magnitude;
@@ -66,7 +71,9 @@ public class HookBehaviour : MonoBehaviour {
         }
         else if(grabed)
         {
-
+            joint.connectedBody = transform.parent.gameObject.GetComponent<Rigidbody2D>();
+            joint.distance = 5;
+            attach_position = transform.position;
             hookState = Go;
         }
 
@@ -75,7 +82,17 @@ public class HookBehaviour : MonoBehaviour {
     
     void Go()
     {
+        transform.position = attach_position;
 
+        if(joint.distance > 0.0f)
+            joint.distance -= player_speed * Time.deltaTime;
+        
+        if(Input.GetKeyDown(KeyCode.G))
+        {
+            joint.connectedBody = null;
+            hookState = Return;
+        }
+        
     }
 
     void Return()
