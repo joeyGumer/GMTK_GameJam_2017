@@ -17,6 +17,9 @@ public class HookBehaviour : MonoBehaviour {
     Vector3 player_position;
     Vector3 attach_position;
     Vector3 grab_relation;
+
+
+
     GameObject grab_Object = null;
     float distance;
     DistanceJoint2D joint;
@@ -114,8 +117,10 @@ public class HookBehaviour : MonoBehaviour {
     {
         if (grab_Object)
         {
+
             attach_position = grab_Object.transform.position - grab_relation;
             transform.position = attach_position;
+
 
             if (joint.distance > 0.0f)
             {

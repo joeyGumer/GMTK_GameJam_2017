@@ -12,7 +12,9 @@ public class PlayerBehaviour : MonoBehaviour {
     //Private attributes
     private GameObject hook_number_1 = null;
     private GameObject hook_number_2 = null;
+    Vector3 player_velocity = Vector3.zero;
     bool on_feet = false;
+    bool on_hook = false;
 
     // Use this for initialization
     void Start () {
@@ -40,7 +42,6 @@ public class PlayerBehaviour : MonoBehaviour {
         {
             ThrowHook(true);
         }
-
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -89,6 +90,8 @@ public class PlayerBehaviour : MonoBehaviour {
             hook_number_1.GetComponent<HookBehaviour>().target = tar;
             hook_number_1.GetComponent<HookBehaviour>().hook_type = hook_type;
 
+            on_hook = true;
+
         }
         else if(!hook_type && hook_number_2 == null)
         {
@@ -99,6 +102,8 @@ public class PlayerBehaviour : MonoBehaviour {
 
             hook_number_2.GetComponent<HookBehaviour>().target = tar;
             hook_number_2.GetComponent<HookBehaviour>().hook_type = hook_type;
+
+            on_hook = true;
         }
     }
 

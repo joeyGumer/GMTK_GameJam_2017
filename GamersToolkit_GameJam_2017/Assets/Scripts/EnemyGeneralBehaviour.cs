@@ -48,5 +48,4 @@ public class EnemyGeneralBehaviour : MonoBehaviour {
                 hit_by_green = true;
         }
 
-        }
     }
