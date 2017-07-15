@@ -45,7 +45,10 @@ public class PlayerBehaviour : MonoBehaviour {
 
        hook = Instantiate(hookPrefab, transform);
 
-        hook.GetComponent<HookBehaviour>().target = Input.mousePosition;
+        Vector3 tar = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        tar.z = 0;
+
+        hook.GetComponent<HookBehaviour>().target = tar;
     }
 
 }

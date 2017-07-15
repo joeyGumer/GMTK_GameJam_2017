@@ -7,7 +7,7 @@ public class HookBehaviour : MonoBehaviour {
     public Vector3 target;
     public float max_distance = 10;
     public float speed;
-    public bool to_destroy = false;
+   // public bool to_destroy = false;
 
     private Vector3 direction;
     private Vector3 player_position;
@@ -39,7 +39,7 @@ public class HookBehaviour : MonoBehaviour {
     //Utils
 
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "grab")
             grabed = true;
@@ -66,6 +66,7 @@ public class HookBehaviour : MonoBehaviour {
         }
         else if(grabed)
         {
+
             hookState = Go;
         }
 
