@@ -9,6 +9,7 @@ public class Enemy1Behaviour : MonoBehaviour {
     public GameObject GOpositionA;
     public GameObject GOpositionB;
     public float target_offset = 0.2f;
+    public int enemy_type = 1;
 
     private Vector3 target;
     private Vector3 dir;

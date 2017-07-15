@@ -9,6 +9,7 @@ public class HookBehaviour : MonoBehaviour {
     public float max_distance = 10;
     public float hook_speed = 50;
     public float player_speed = 50;
+    public bool hook_type = false;
 
    // public bool to_destroy = false;
 
@@ -48,8 +49,16 @@ public class HookBehaviour : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "grab")
+        if (other.gameObject.tag == "grab" || other.gameObject.tag == "Enemy")
+        {
             grabed = true;
+
+            if(other.gameObject.tag == "Enemy")
+            {
+                other.gameObject.GetComponent<EnemyGeneralBehaviour>().hit = true;
+            }
+        }
+
 
         if (other.gameObject.tag == "Player" && returning)
             Destroy(this.gameObject);
@@ -103,16 +112,27 @@ public class HookBehaviour : MonoBehaviour {
             joint.distance -= dist;
         }
         
-        if(Input.GetKeyDown(KeyCode.G))
+        if(hook_type)
         {
-            joint.connectedBody = null;
-            returning = true;
-            hookState = Return;
+            if (Input.GetKeyUp("r"))
+                ReturnStart();
+        }
+        else
+        {
+            if (Input.GetKeyUp("e"))
+                ReturnStart();
         }
         
     }
 
     //The hook returns to the player
+    void ReturnStart()
+    {
+        joint.connectedBody = null;
+        returning = true;
+        hookState = Return;
+    }
+
     void Return()
     {
         target = transform.parent.position;

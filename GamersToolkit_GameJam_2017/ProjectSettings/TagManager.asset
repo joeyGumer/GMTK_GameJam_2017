@@ -6,6 +6,7 @@ TagManager:
   tags:
   - grab
   - Hook
+  - Enemy
   layers:
   - Default
   - TransparentFX

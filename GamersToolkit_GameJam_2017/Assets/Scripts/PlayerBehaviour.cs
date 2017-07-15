@@ -79,7 +79,10 @@ public class PlayerBehaviour : MonoBehaviour {
             Vector3 tar = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             tar.z = 0;
 
+            
             hook_number_1.GetComponent<HookBehaviour>().target = tar;
+            hook_number_1.GetComponent<HookBehaviour>().hook_type = hook_type;
+
         }
         else if(!hook_type && hook_number_2 == null)
         {
@@ -88,7 +91,8 @@ public class PlayerBehaviour : MonoBehaviour {
             Vector3 tar = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             tar.z = 0;
 
-            hook_number_2.GetComponent<HookBehaviour>().target = tar;           
+            hook_number_2.GetComponent<HookBehaviour>().target = tar;
+            hook_number_2.GetComponent<HookBehaviour>().hook_type = hook_type;
         }
     }
 
