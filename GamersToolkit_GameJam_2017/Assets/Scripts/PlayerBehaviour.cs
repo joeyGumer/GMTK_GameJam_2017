@@ -9,8 +9,8 @@ public class PlayerBehaviour : MonoBehaviour {
     public GameObject hookPrefab;
 
     //Private attributes
-    private bool throwingHook = false;
-    private GameObject hook = null;
+    private GameObject hook_number_1 = null;
+    private GameObject hook_number_2 = null;
 
     // Use this for initialization
     void Start () {
@@ -41,14 +41,25 @@ public class PlayerBehaviour : MonoBehaviour {
     //Throws the Hook
     void ThrowHook()
     {
-        throwingHook = true;
 
-       hook = Instantiate(hookPrefab, transform);
+        if (hook_number_1 == null)
+        {
+            hook_number_1 = Instantiate(hookPrefab, transform);
 
-        Vector3 tar = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        tar.z = 0;
+            Vector3 tar = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            tar.z = 0;
 
-        hook.GetComponent<HookBehaviour>().target = tar;
+            hook_number_1.GetComponent<HookBehaviour>().target = tar;
+        }
+        else if(hook_number_2 == null)
+        {
+            hook_number_2 = Instantiate(hookPrefab, transform);
+
+            Vector3 tar = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            tar.z = 0;
+
+            hook_number_2.GetComponent<HookBehaviour>().target = tar;           
+        }
     }
 
 }

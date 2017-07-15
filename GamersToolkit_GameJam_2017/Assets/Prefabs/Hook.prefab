@@ -91,10 +91,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {x: 0, y: 0, z: 0}
+  target_offset: 1
   max_distance: 50
   hook_speed: 50
-  player_speed: 50
+  player_speed: 20
   grabed: 0
+  returning: 0
 --- !u!212 &212431263802697730
 SpriteRenderer:
   m_ObjectHideFlags: 1

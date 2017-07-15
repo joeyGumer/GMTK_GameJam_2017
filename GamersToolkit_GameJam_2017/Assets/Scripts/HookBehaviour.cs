@@ -5,6 +5,7 @@ using UnityEngine;
 public class HookBehaviour : MonoBehaviour {
 
     public Vector3 target;
+    public float target_offset = 0.5f;
     public float max_distance = 10;
     public float hook_speed = 50;
     public float player_speed = 50;
@@ -19,6 +20,7 @@ public class HookBehaviour : MonoBehaviour {
 
     //[---read only----!]
     public bool grabed;
+    public bool returning;
 
     delegate void HookState();
     HookState hookState;
@@ -27,10 +29,10 @@ public class HookBehaviour : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        grabed = false;
+        grabed = returning = false;
         player_position = transform.position;
         joint = GetComponent<DistanceJoint2D>();
-        direction = (target - transform.position).normalized;
+        CalculateDirection();
         hookState = Throw;
 
 
@@ -48,9 +50,16 @@ public class HookBehaviour : MonoBehaviour {
     {
         if (other.gameObject.tag == "grab")
             grabed = true;
-            
+
+        if (other.gameObject.tag == "Player" && returning)
+            Destroy(this.gameObject);
+
     }
 
+    void CalculateDirection()
+    {
+        direction = (target - transform.position).normalized;
+    }
     void Move()
     {
         Vector3 mov = direction * hook_speed * Time.deltaTime;
@@ -59,15 +68,17 @@ public class HookBehaviour : MonoBehaviour {
         distance = (transform.position - player_position).magnitude;
     }
 
-    //Hook behaviour states
+    //Hook behaviour states-------
+
+    //The hook is thrown
     void Throw()
     {
         Move();
 
         if (distance >= max_distance)
         {
+            returning = true;
             hookState = Return;
-            direction = -direction;
         }
         else if(grabed)
         {
@@ -80,6 +91,8 @@ public class HookBehaviour : MonoBehaviour {
         
     }
     
+
+    //Player goes to the direction of the hook
     void Go()
     {
         transform.position = attach_position;
@@ -90,19 +103,31 @@ public class HookBehaviour : MonoBehaviour {
         if(Input.GetKeyDown(KeyCode.G))
         {
             joint.connectedBody = null;
+            returning = true;
             hookState = Return;
         }
         
     }
 
+    //The hook returns to the player
     void Return()
     {
+        target = transform.parent.position;
+        target.z = 0;
+        CalculateDirection();
         Move();
 
-        if(distance <= 0.2)
+        
+
+        /*if(distance <= target_offset)
         {
-            Destroy(this);
-        }
+            Destroy(this.gameObject);
+        }*/
+       
     }
 
+    private void OnDrawGizmos()
+    {
+        
+    }
 }
