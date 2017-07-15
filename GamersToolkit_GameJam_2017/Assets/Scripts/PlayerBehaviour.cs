@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour {
 
     //Public attributes
+    public int hp = 3;
     public float speed = 20.0f;
     public GameObject hookPrefab;
 
@@ -46,12 +47,17 @@ public class PlayerBehaviour : MonoBehaviour {
     {
         if(other.tag != "Hook")
             on_feet = true;
+
+        if (other.tag == "Enemy")
+            hp -= 1;
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.tag != "Hook")
             on_feet = false;
+
+       
     }
 
     //Methods

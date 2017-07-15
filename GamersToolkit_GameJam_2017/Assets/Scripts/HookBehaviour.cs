@@ -16,6 +16,8 @@ public class HookBehaviour : MonoBehaviour {
     Vector3 direction;
     Vector3 player_position;
     Vector3 attach_position;
+    Vector3 grab_relation;
+    GameObject grab_Object = null;
     float distance;
     DistanceJoint2D joint;
 
@@ -55,14 +57,19 @@ public class HookBehaviour : MonoBehaviour {
 
             if(other.gameObject.tag == "Enemy")
             {
-                other.gameObject.GetComponent<EnemyGeneralBehaviour>().hit = true;
+                other.gameObject.GetComponent<EnemyGeneralBehaviour>().GetHit(hook_type);
             }
+
+            attach_position = transform.position;
+            grab_relation =  other.gameObject.transform.position - attach_position;
+            grab_Object = other.gameObject;
         }
 
 
         if (other.gameObject.tag == "Player" && returning)
             Destroy(this.gameObject);
 
+        
     }
 
     void CalculateDirection()
@@ -84,6 +91,8 @@ public class HookBehaviour : MonoBehaviour {
     {
         Move();
 
+        CheckToReturn();
+
         if (distance >= max_distance)
         {
             returning = true;
@@ -93,10 +102,9 @@ public class HookBehaviour : MonoBehaviour {
         {
             joint.connectedBody = transform.parent.gameObject.GetComponent<Rigidbody2D>();
             joint.distance = 5;
-            attach_position = transform.position;
             hookState = Go;
         }
-
+        
         
     }
     
@@ -104,15 +112,28 @@ public class HookBehaviour : MonoBehaviour {
     //Player goes to the direction of the hook
     void Go()
     {
-        transform.position = attach_position;
-
-        if (joint.distance > 0.0f)
+        if (grab_Object)
         {
-            float dist = player_speed * Time.deltaTime;
-            joint.distance -= dist;
+            attach_position = grab_Object.transform.position - grab_relation;
+            transform.position = attach_position;
+
+            if (joint.distance > 0.0f)
+            {
+                float dist = player_speed * Time.deltaTime;
+                joint.distance -= dist;
+            }
+
+            CheckToReturn();
         }
-        
-        if(hook_type)
+        else
+            ReturnStart();
+    }
+
+
+
+    void CheckToReturn()
+    {
+        if (hook_type)
         {
             if (Input.GetKeyUp("r"))
                 ReturnStart();
@@ -122,9 +143,7 @@ public class HookBehaviour : MonoBehaviour {
             if (Input.GetKeyUp("e"))
                 ReturnStart();
         }
-        
     }
-
     //The hook returns to the player
     void ReturnStart()
     {
