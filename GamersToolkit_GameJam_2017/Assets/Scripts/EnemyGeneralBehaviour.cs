@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyGeneralBehaviour : MonoBehaviour {
+public class EnemyGeneralBehaviour : MonoBehaviour
+{
 
     public int hp = 1;
 
@@ -15,7 +16,7 @@ public class EnemyGeneralBehaviour : MonoBehaviour {
 
     private void Update()
     {
-        if(hp == 0)
+        if (hp == 0)
         {
             Destroy(this.gameObject);
         }
@@ -43,9 +44,11 @@ public class EnemyGeneralBehaviour : MonoBehaviour {
                 hit_by_red = false;
             }
             else if (!hook_type)
-                hit_by_red = true;  
+                hit_by_red = true;
             else if (hook_type)
                 hit_by_green = true;
         }
 
     }
+
+}

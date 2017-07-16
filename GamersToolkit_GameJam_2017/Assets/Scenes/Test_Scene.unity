@@ -231,9 +231,13 @@ GameObject:
   - component: {fileID: 793809797}
   - component: {fileID: 793809796}
   - component: {fileID: 793809798}
+  - component: {fileID: 793809800}
+  - component: {fileID: 793809799}
+  - component: {fileID: 793809802}
+  - component: {fileID: 793809801}
   m_Layer: 0
   m_Name: Enemy2
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -304,6 +308,66 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c0b0396eb08c934bbf29a653689594b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!50 &793809799
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 793809795}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!58 &793809800
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 793809795}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 4
+--- !u!114 &793809801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 793809795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c0b0396eb08c934bbf29a653689594b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &793809802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 793809795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73b8462f21b824248becf104ae9c8436, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 1
+  hit: 0
+  damage_type: 1
 --- !u!1 &1218270326
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,6 +623,10 @@ Prefab:
         type: 2}
       propertyPath: damage_type
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1095682713441388, guid: 2527eb0c648707a44be1504ab206b124, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2527eb0c648707a44be1504ab206b124, type: 2}
